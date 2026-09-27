@@ -2,15 +2,18 @@ let anim_actual = 0;
 
 // Escenas
 let MENU = 0;
-let CREDITOS = 3;
 let ESCENA1 = 1;
 let ESCENA2 = 2;
+let ESCENA3 = 3;
+let ESCENA4 = 4;
+let CREDITOS = 5;
 let escena_actual = MENU;
 
 // Imagenes
 let menu_inicio_img;
 let menu_creditos_img;
-let escenas_img;
+let escenas = [];
+let totalEscenas = 4;
 // Sonidos
 let background_music;
 
@@ -18,32 +21,34 @@ function preload() {
   // Cargar imagenes
   menu_inicio_img = loadImage("assets/images/bg/_menu_inicio.png");
   //menu_creditos_img = loadImage("assets/images/bg/menu_creditos.png");
-  escenas_img = preload_anim("assets/images/bg/p", 3);
+  for (let i = 0; i < totalEscenas; i++) {
+    escenas[i] = loadImage("assets/images/bg/p" + i + ".png");
+  }
 
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
-
 }
 
 function setup() {
   createCanvas(800, 450);
   background(255, 0, 0);
   print(escena_actual);
-  print(escenas_img);
+  print(escenas[0]);
 }
 
 function draw() {
   if (escena_actual === MENU) {
     draw_menu_inicio();
-  }
-  else if (escena_actual === CREDITOS) {
+  } else if (escena_actual === CREDITOS) {
     draw_creditos();
-  }
-  else if (escena_actual === ESCENA1) {
+  } else if (escena_actual === ESCENA1) {
     draw_escena1();
-  }
-  else if (escena_actual === ESCENA2) {
+  } else if (escena_actual === ESCENA2) {
     draw_escena2();
+  } else if (escena_actual === ESCENA3) {
+    draw_escena3();
+  } else if (escena_actual === ESCENA4) {
+    draw_escena4();
   }
 }
 
@@ -54,15 +59,16 @@ function mousePressed() {
 
   if (escena_actual === MENU) {
     mouse_menu_inicio();
-  }
-  else if (escena_actual === CREDITOS) {
+  } else if (escena_actual === CREDITOS) {
     mouse_creditos();
-  }
-  else if (escena_actual === ESCENA1) {
+  } else if (escena_actual === ESCENA1) {
     mouse_escena1();
-  }
-  else if (escena_actual === ESCENA2) {
+  } else if (escena_actual === ESCENA2) {
     mouse_escena2();
+  } else if (escena_actual === ESCENA3) {
+    mouse_escena3();
+  } else if (escena_actual === ESCENA4) {
+    mouse_escena4();
   }
 }
 
@@ -79,7 +85,7 @@ function mouse_menu_inicio() {
 
 function draw_escena1() {
   background(0);
-  //image(escenas_img[0], 0, 0);
+  image(escenas[0], 0, 0);
   dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
 }
 
@@ -91,11 +97,33 @@ function mouse_escena1() {
 
 function draw_escena2() {
   background(128);
-  //image(escenas_img[1], 0, 0);
+  image(escenas[1], 0, 0);
   dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
 }
 
 function mouse_escena2() {
+  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
+    escena_actual = ESCENA3;
+  }
+}
+function draw_escena3() {
+  background(128);
+  image(escenas[2], 0, 0);
+  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
+}
+
+function mouse_escena3() {
+  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
+    escena_actual = ESCENA4;
+  }
+}
+function draw_escena4() {
+  background(128);
+  image(escenas[3], 0, 0);
+  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
+}
+
+function mouse_escena4() {
   if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
     escena_actual = CREDITOS;
   }
@@ -120,7 +148,6 @@ function mouse_creditos() {
   }
 }
 
-
 function preload_anim(image_path, cant_frames) {
   let anim = [];
 
@@ -134,7 +161,8 @@ function preload_anim(image_path, cant_frames) {
 function iniciar_anim(nombre_anim, tiempo, pos_x, pos_y, tam_x, tam_y) {
   image(nombre_anim[anim_actual], pos_x, pos_y, tam_x, tam_y);
 
-  if (frameCount % tiempo === 0) { // Si frameCount es un múltiplo
+  if (frameCount % tiempo === 0) {
+    // Si frameCount es un múltiplo
     anim_actual++;
 
     if (anim_actual >= nombre_anim.length) {
@@ -146,8 +174,7 @@ function iniciar_anim(nombre_anim, tiempo, pos_x, pos_y, tam_x, tam_y) {
 function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
   if (detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
     fill(100);
-  }
-  else {
+  } else {
     fill(0);
   }
 
@@ -159,10 +186,14 @@ function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
 }
 
 function detectar_zona(pos_x, pos_y, tam_x, tam_y) {
-  if (mouseX > pos_x && mouseX < pos_x + tam_x && mouseY > pos_y && mouseY < pos_y + tam_y) {
+  if (
+    mouseX > pos_x &&
+    mouseX < pos_x + tam_x &&
+    mouseY > pos_y &&
+    mouseY < pos_y + tam_y
+  ) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
