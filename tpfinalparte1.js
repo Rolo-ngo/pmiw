@@ -18,14 +18,14 @@ let texto_creditos;
 
 function preload() {
   // Cargar imagenes
-  escenas = preload_images("assets/images/bg/p", total_escenas, ".png");
+  escenas = preload_files("assets/images/bg/p", total_escenas, ".png", loadImage);
 
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
 
   // Cargar textos
   texto_creditos = loadStrings("assets/texts/creditos.txt");
-  textos = preload_texts("assets/texts/pantalla", 2, ".txt");
+  //textos = preload_files("assets/texts/pantalla", 2, ".txt", loadStrings);
 
 }
 
@@ -78,27 +78,13 @@ function draw_creditos() {
   }
 }
 
-function preload_images(images_path, cant_frames, formato) {
-  let anim = [];
+function preload_files(arch_path, cant_files, formato, tipo) {
+  let arch = [];
 
-  for (let i = 0; i < cant_frames; i++) {
-    anim.push(loadImage(images_path + i + formato));
+  for (let i = 0; i < cant_files; i++) {
+    arch.push(tipo(arch_path + i + formato));
   }
-
-  return anim;
-}
-
-function preload_texts(texts_path, cant_textos, formato) {
-  let anim = [];
-
-  for (let i = 0; i < cant_textos; i++) {
-    if (i = null) {
-      anim[i] = null;
-    }
-    anim.push(loadStrings(texts_path + i + formato));
-  }
-
-  return anim;
+  return arch;
 }
 
 function dibujar_escenas() {
