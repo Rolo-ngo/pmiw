@@ -1,9 +1,10 @@
 let anim_actual = 0;
+let caracter_actual = 0;
 let click = false;
 
 // Escenas
 let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, CREDITOS = 3;
-let escena_actual = MENU;
+let escena_actual = ESCENA1;
 let total_escenas = 3;
 
 // Imagenes
@@ -18,14 +19,14 @@ let texto_creditos;
 
 function preload() {
   // Cargar imagenes
-  escenas = preload_files("assets/images/bg/p", total_escenas, ".png", loadImage);
+  escenas = preload_files("assets/images/bg/p", total_escenas, ".png", loadImage, 0);
 
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
 
   // Cargar textos
   texto_creditos = loadStrings("assets/texts/creditos.txt");
-  //textos = preload_files("assets/texts/pantalla", 2, ".txt", loadStrings);
+  textos = preload_files("assets/texts/pantalla", 3, ".txt", loadStrings, 1);
 
 }
 
@@ -53,6 +54,7 @@ function mousePressed() {
   if (!background_music.isPlaying()) {
     //background_music.loop();
   }
+
   click = true;
   print("escena_actual: " + escena_actual);
 }
@@ -78,10 +80,10 @@ function draw_creditos() {
   }
 }
 
-function preload_files(arch_path, cant_files, formato, tipo) {
+function preload_files(arch_path, cant_files, formato, tipo, inicio) {
   let arch = [];
 
-  for (let i = 0; i < cant_files; i++) {
+  for (let i = inicio; i < cant_files; i++) {
     arch.push(tipo(arch_path + i + formato));
   }
   return arch;
@@ -90,10 +92,20 @@ function preload_files(arch_path, cant_files, formato, tipo) {
 function dibujar_escenas() {
   background(255);
   image(escenas[escena_actual], 0, 0, width, height);
+  
+  fill(0, 200);
+  rect(0, 0 + height / 3 * 2, width, height / 3);
 
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
-  if (click && detectar_zona(width / 2 - 80, 360, 160, 50)) {
+
+  estilo_texto(16, 255, LEFT, CENTER);
+  let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
+  text(texto_actual, 20, 140, width - 40, height - 40);
+  caracter_actual += 0.4;
+  
+  dibujar_boton(width / 2 - 80, 380, 160, 50, "Cambiar escena", 0);
+  if (click && detectar_zona(width / 2 - 80, 380, 160, 50)) {
     escena_actual++;
+    caracter_actual = 0;
   }
 }
 
@@ -119,8 +131,9 @@ function detectar_zona(pos_x, pos_y, tam_x, tam_y) {
   }
 }
 
-function estilo_texto(tam, color, align_x, align_y) {
+function estilo_texto(tam, color, align_x, align_y, fuente) {
   textSize(tam);
   fill(color);
   textAlign(align_x, align_y);
+  textFont("courier");
 }
