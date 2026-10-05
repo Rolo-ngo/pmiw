@@ -4,17 +4,19 @@ let click = false;
 
 // Escenas
 let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, CREDITOS = 3;
-let escena_actual = ESCENA1;
+let escena_actual = MENU;
 let total_escenas = 3;
 
 // Imagenes
 let escenas = [];
-let textos = [];
 
 // Sonidos
-let background_music;
+let background_music = [];
+let ui_sounds = [];
+let typewriter_sounds = [];
 
 // Textos
+let textos = [];
 let texto_creditos;
 
 function preload() {
@@ -23,6 +25,8 @@ function preload() {
 
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
+  ui_sounds = preload_files("assets/audio/sfx/boton", 2, ".mp3", loadSound, 0);
+  typewriter_sounds = preload_files("assets/audio/sfx/typewriter", 3, ".wav", loadSound, 1);
 
   // Cargar textos
   texto_creditos = loadStrings("assets/texts/creditos.txt");
@@ -71,10 +75,10 @@ function draw_menu_inicio() {
 function draw_creditos() {
   background(64);
 
-  estilo_texto(20, 255, CENTER, CENTER);
+  estilo_texto(20, 255, CENTER, CENTER, "courier");
   text(texto_creditos.join("\n"), width / 2, height / 2);
 
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Volver al menu", 0);
+  dibujar_boton(width / 2 - 80, 360, 160, 50, "Volver al menu", 0, 100, 150);
   if (click && detectar_zona(width / 2 - 80, 360, 160, 50)) {
     escena_actual = MENU;
   }
@@ -90,23 +94,19 @@ function preload_files(arch_path, cant_files, formato, tipo, inicio) {
 }
 
 function dibujar_escenas() {
-  background(255);
   image(escenas[escena_actual], 0, 0, width, height);
-  
+
   fill(0, 200);
   rect(0, 0 + height / 3 * 2, width, height / 3);
 
 
-  estilo_texto(16, 255, LEFT, CENTER);
+  estilo_texto(16, 255, LEFT, TOP, "courier");
   let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
-  text(texto_actual, 20, 140, width - 40, height - 40);
+  text(texto_actual, 20, height / 3 * 2 + 10, width - 40, height / 3 - 20);
   caracter_actual += 0.4;
-  
-  dibujar_boton(width / 2 - 80, 380, 160, 50, "Cambiar escena", 0);
-  if (click && detectar_zona(width / 2 - 80, 380, 160, 50)) {
-    escena_actual++;
-    caracter_actual = 0;
-  }
+
+  dibujar_boton(width / 2 - 80, 380, 150, 40, "Continuar", 0);
+
 }
 
 function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
@@ -116,9 +116,14 @@ function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
   else {
     fill(0);
   }
+  if (click && detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
+    ui_sounds[1].play();
+    caracter_actual = 0;
+    escena_actual++;
+  }
 
   rect(pos_x, pos_y, tam_x, tam_y, bordes);
-  estilo_texto(tam_y / 3, 255, CENTER, CENTER);
+  estilo_texto(tam_y / 3, 255, CENTER, CENTER, "courier");
   text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
 }
 
@@ -135,5 +140,5 @@ function estilo_texto(tam, color, align_x, align_y, fuente) {
   textSize(tam);
   fill(color);
   textAlign(align_x, align_y);
-  textFont("courier");
+  textFont(fuente);
 }
