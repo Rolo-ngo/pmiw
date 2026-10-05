@@ -1,55 +1,53 @@
 let anim_actual = 0;
+let caracter_actual = 0;
+let click = false;
 
 // Escenas
-let MENU = 0;
-let ESCENA1 = 1;
-let ESCENA2 = 2;
-let ESCENA3 = 3;
-let ESCENA4 = 4;
-let CREDITOS = 5;
-let escena_actual = MENU;
+let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, CREDITOS = 3;
+let escena_actual = ESCENA1;
+let total_escenas = 3;
 
 // Imagenes
-let menu_inicio_img;
-let menu_creditos_img;
 let escenas = [];
-let totalEscenas = 4;
+let textos = [];
+
 // Sonidos
 let background_music;
 
+// Textos
+let texto_creditos;
+
 function preload() {
   // Cargar imagenes
-  menu_inicio_img = loadImage("assets/images/bg/_menu_inicio.png");
-  //menu_creditos_img = loadImage("assets/images/bg/menu_creditos.png");
-  for (let i = 0; i < totalEscenas; i++) {
-    escenas[i] = loadImage("assets/images/bg/p" + i + ".png");
-  }
+  escenas = preload_files("assets/images/bg/p", total_escenas, ".png", loadImage, 0);
 
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
+
+  // Cargar textos
+  texto_creditos = loadStrings("assets/texts/creditos.txt");
+  textos = preload_files("assets/texts/pantalla", 3, ".txt", loadStrings, 1);
+
 }
 
 function setup() {
   createCanvas(800, 450);
-  background(255, 0, 0);
-  print(escena_actual);
-  print(escenas[0]);
 }
 
 function draw() {
   if (escena_actual === MENU) {
     draw_menu_inicio();
-  } else if (escena_actual === CREDITOS) {
-    draw_creditos();
-  } else if (escena_actual === ESCENA1) {
-    draw_escena1();
-  } else if (escena_actual === ESCENA2) {
-    draw_escena2();
-  } else if (escena_actual === ESCENA3) {
-    draw_escena3();
-  } else if (escena_actual === ESCENA4) {
-    draw_escena4();
   }
+  else if (escena_actual === CREDITOS) {
+    draw_creditos();
+  }
+  else if (escena_actual === ESCENA1) {
+    dibujar_escenas();
+  }
+  else if (escena_actual === ESCENA2) {
+    dibujar_escenas();
+  }
+  click = false;
 }
 
 function mousePressed() {
@@ -57,143 +55,85 @@ function mousePressed() {
     //background_music.loop();
   }
 
-  if (escena_actual === MENU) {
-    mouse_menu_inicio();
-  } else if (escena_actual === CREDITOS) {
-    mouse_creditos();
-  } else if (escena_actual === ESCENA1) {
-    mouse_escena1();
-  } else if (escena_actual === ESCENA2) {
-    mouse_escena2();
-  } else if (escena_actual === ESCENA3) {
-    mouse_escena3();
-  } else if (escena_actual === ESCENA4) {
-    mouse_escena4();
-  }
+  click = true;
+  print("escena_actual: " + escena_actual);
 }
 
 function draw_menu_inicio() {
-  image(menu_inicio_img, 0, 0);
-  dibujar_boton(128, 360, 160, 50, "Empezar", 0);
-}
-
-function mouse_menu_inicio() {
-  if (detectar_zona(128, 360, 160, 50)) {
-    escena_actual = ESCENA1;
-  }
-}
-
-function draw_escena1() {
-  background(0);
   image(escenas[0], 0, 0);
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
-}
 
-function mouse_escena1() {
-  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
-    escena_actual = ESCENA2;
-  }
-}
-
-function draw_escena2() {
-  background(128);
-  image(escenas[1], 0, 0);
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
-}
-
-function mouse_escena2() {
-  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
-    escena_actual = ESCENA3;
-  }
-}
-function draw_escena3() {
-  background(128);
-  image(escenas[2], 0, 0);
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
-}
-
-function mouse_escena3() {
-  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
-    escena_actual = ESCENA4;
-  }
-}
-function draw_escena4() {
-  background(128);
-  image(escenas[3], 0, 0);
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Cambiar escena", 0);
-}
-
-function mouse_escena4() {
-  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
-    escena_actual = CREDITOS;
+  dibujar_boton(128, 360, 160, 50, "Empezar", 0);
+  if (click && detectar_zona(128, 360, 160, 50)) {
+    escena_actual = ESCENA1;
   }
 }
 
 function draw_creditos() {
   background(64);
-  textSize(32);
-  textAlign(CENTER, CENTER);
-  text("Créditos", width / 2, height / 2 - 50);
-  textSize(24);
-  text("Desarrollado por:", width / 2, height / 2);
-  text("Thiago Lionel Costa", width / 2, height / 2 + 30);
-  text("Sebastián López Alegre", width / 2, height / 2 + 60);
+
+  estilo_texto(20, 255, CENTER, CENTER);
+  text(texto_creditos.join("\n"), width / 2, height / 2);
 
   dibujar_boton(width / 2 - 80, 360, 160, 50, "Volver al menu", 0);
-}
-
-function mouse_creditos() {
-  if (detectar_zona(width / 2 - 80, 360, 160, 50)) {
+  if (click && detectar_zona(width / 2 - 80, 360, 160, 50)) {
     escena_actual = MENU;
   }
 }
 
-function preload_anim(image_path, cant_frames) {
-  let anim = [];
+function preload_files(arch_path, cant_files, formato, tipo, inicio) {
+  let arch = [];
 
-  for (let i = 1; i < cant_frames; i++) {
-    anim.push(loadImage(image_path + i + ".png"));
+  for (let i = inicio; i < cant_files; i++) {
+    arch.push(tipo(arch_path + i + formato));
   }
-
-  return anim;
+  return arch;
 }
 
-function iniciar_anim(nombre_anim, tiempo, pos_x, pos_y, tam_x, tam_y) {
-  image(nombre_anim[anim_actual], pos_x, pos_y, tam_x, tam_y);
+function dibujar_escenas() {
+  background(255);
+  image(escenas[escena_actual], 0, 0, width, height);
+  
+  fill(0, 200);
+  rect(0, 0 + height / 3 * 2, width, height / 3);
 
-  if (frameCount % tiempo === 0) {
-    // Si frameCount es un múltiplo
-    anim_actual++;
 
-    if (anim_actual >= nombre_anim.length) {
-      anim_actual = 0;
-    }
+  estilo_texto(16, 255, LEFT, CENTER);
+  let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
+  text(texto_actual, 20, 140, width - 40, height - 40);
+  caracter_actual += 0.4;
+  
+  dibujar_boton(width / 2 - 80, 380, 160, 50, "Cambiar escena", 0);
+  if (click && detectar_zona(width / 2 - 80, 380, 160, 50)) {
+    escena_actual++;
+    caracter_actual = 0;
   }
 }
 
 function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
   if (detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
     fill(100);
-  } else {
+  }
+  else {
     fill(0);
   }
 
   rect(pos_x, pos_y, tam_x, tam_y, bordes);
-  textSize(tam_y / 3);
-  textAlign(CENTER, CENTER);
-  fill(255);
+  estilo_texto(tam_y / 3, 255, CENTER, CENTER);
   text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
 }
 
 function detectar_zona(pos_x, pos_y, tam_x, tam_y) {
-  if (
-    mouseX > pos_x &&
-    mouseX < pos_x + tam_x &&
-    mouseY > pos_y &&
-    mouseY < pos_y + tam_y
-  ) {
+  if (mouseX > pos_x && mouseX < pos_x + tam_x && mouseY > pos_y && mouseY < pos_y + tam_y) {
     return true;
-  } else {
+  }
+  else {
     return false;
   }
+}
+
+function estilo_texto(tam, color, align_x, align_y, fuente) {
+  textSize(tam);
+  fill(color);
+  textAlign(align_x, align_y);
+  textFont("courier");
 }
