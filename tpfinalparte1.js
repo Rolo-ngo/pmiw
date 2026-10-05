@@ -8,18 +8,26 @@ let MENU = 0,
   ESCENA2 = 2,
   ESCENA3 = 3,
   ESCENA4 = 4,
-  CREDITOS = 5;
+  ESCENA5 = 5,
+  ESCENA6 = 6,
+  ESCENA7 = 7,
+  ESCENA8 = 8,
+  ESCENA9 = 9,
+  ESCENA10 = 10,
+  CREDITOS = 11;
 let escena_actual = MENU;
-let total_escenas = 5;
+let total_escenas = 11;
 
 // Imagenes
 let escenas = [];
-let textos = [];
 
 // Sonidos
-let background_music;
+let background_music = [];
+let ui_sounds = [];
+let typewriter_sounds = [];
 
 // Textos
+let textos = [];
 let texto_creditos;
 
 function preload() {
@@ -34,10 +42,18 @@ function preload() {
 
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
+  ui_sounds = preload_files("assets/audio/sfx/boton", 2, ".mp3", loadSound, 0);
+  typewriter_sounds = preload_files(
+    "assets/audio/sfx/typewriter",
+    3,
+    ".wav",
+    loadSound,
+    1,
+  );
 
   // Cargar textos
   texto_creditos = loadStrings("assets/texts/creditos.txt");
-  textos = preload_files("assets/texts/pantalla", 5, ".txt", loadStrings, 1);
+  textos = preload_files("assets/texts/pantalla", 11, ".txt", loadStrings, 1);
 }
 
 function setup() {
@@ -56,7 +72,19 @@ function draw() {
   } else if (escena_actual === ESCENA3) {
     dibujar_escenas();
   } else if (escena_actual === ESCENA4) {
-    dibujar_escenas_opciones();
+    dibujar_escena4();
+  } else if (escena_actual === ESCENA5) {
+    dibujar_escenas();
+  } else if (escena_actual === ESCENA6) {
+    dibujar_escenas();
+  } else if (escena_actual === ESCENA7) {
+    dibujar_escenas();
+  } else if (escena_actual === ESCENA8) {
+    dibujar_escenas();
+  } else if (escena_actual === ESCENA9) {
+    dibujar_escenas();
+  } else if (escena_actual === ESCENA10) {
+    dibujar_escenas();
   }
   click = false;
 }
@@ -82,10 +110,10 @@ function draw_menu_inicio() {
 function draw_creditos() {
   background(64);
 
-  estilo_texto(20, 255, CENTER, CENTER);
+  estilo_texto(20, 255, CENTER, CENTER, "courier");
   text(texto_creditos.join("\n"), width / 2, height / 2);
 
-  dibujar_boton(width / 2 - 80, 360, 160, 50, "Volver al menu", 0);
+  dibujar_boton(width / 2 - 80, 360, 160, 50, "Volver al menu", 0, 100, 150);
   if (click && detectar_zona(width / 2 - 80, 360, 160, 50)) {
     escena_actual = MENU;
   }
@@ -101,55 +129,61 @@ function preload_files(arch_path, cant_files, formato, tipo, inicio) {
 }
 
 function dibujar_escenas() {
-  background(255);
   image(escenas[escena_actual], 0, 0, width, height);
 
   fill(0, 200);
   rect(0, 0 + (height / 3) * 2, width, height / 3);
 
-  estilo_texto(16, 255, LEFT, CENTER);
+  estilo_texto(16, 255, LEFT, TOP, "courier");
   let texto_actual = textos[escena_actual - 1]
     .join("\n")
     .substring(0, caracter_actual);
-  text(texto_actual, 20, 140, width - 40, height - 40);
+  text(texto_actual, 20, (height / 3) * 2 + 10, width - 40, height / 3 - 20);
   caracter_actual += 0.4;
 
-  dibujar_boton(width / 2 - 80, 380, 160, 50, "Cambiar escena", 0);
-  if (click && detectar_zona(width / 2 - 80, 380, 160, 50)) {
-    escena_actual++;
-    caracter_actual = 0;
-  }
+  dibujar_boton(width / 2 - 80, 380, 150, 40, "Continuar", 0);
+}
+function dibujar_escena4() {
+  image(escenas[escena_actual], 0, 0, width, height);
+
+  fill(0, 200);
+  rect(0, 0 + (height / 3) * 2, width, height / 3);
+
+  estilo_texto(16, 255, LEFT, TOP, "courier");
+  let texto_actual = textos[escena_actual - 1]
+    .join("\n")
+    .substring(0, caracter_actual);
+  text(texto_actual, 20, (height / 3) * 2 + 10, width - 40, height / 3 - 20);
+  caracter_actual += 0.4;
+
+  dibujar_boton_opcion(width / 5 - 80, 380, 140, 40, "esconder", ESCENA5);
+  dibujar_boton_opcion(width / 2 - 80, 380, 140, 40, "liberar", ESCENA7);
+  dibujar_boton_opcion(width / 1.2 - 80, 380, 140, 40, "ahogar", ESCENA9);
 }
 
-function dibujar_escenas_opciones() {
-  background(255);
-  image(escenas[escena_actual], 0, 0, width, height);
-
-  fill(0, 200);
-  rect(0, 0 + (height / 3) * 2, width, height / 3);
-
-  estilo_texto(16, 255, LEFT, CENTER);
-  let texto_actual = textos[escena_actual - 1]
-    .join("\n")
-    .substring(0, caracter_actual);
-  text(texto_actual, 20, 140, width - 40, height - 40);
-  caracter_actual += 0.4;
-
-  dibujar_boton(width / 2 - 80, 380, 160, 50, "esconder", 0);
-  if (click && detectar_zona(width / 2 - 80, 380, 160, 50)) {
-    escena_actual++;
-    caracter_actual = 0;
+function dibujar_boton_opcion(
+  pos_x,
+  pos_y,
+  tam_x,
+  tam_y,
+  texto,
+  escena_siguiente,
+) {
+  if (detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
+    fill(100);
+  } else {
+    fill(0);
   }
-  dibujar_boton(width / 4 - 80, 380, 160, 50, "liberar", 0);
-  if (click && detectar_zona(width / 4 - 80, 380, 160, 50)) {
-    escena_actual++;
+
+  if (click && detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
+    ui_sounds[1].play();
     caracter_actual = 0;
+    escena_actual = escena_siguiente;
   }
-  dibujar_boton(width / 1.3 - 80, 380, 160, 50, "matar", 0);
-  if (click && detectar_zona(width / 1.3 - 80, 380, 160, 50)) {
-    escena_actual++;
-    caracter_actual = 0;
-  }
+
+  rect(pos_x, pos_y, tam_x, tam_y, 0);
+  estilo_texto(tam_y / 3, 255, CENTER, CENTER, "courier");
+  text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
 }
 
 function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
@@ -158,9 +192,14 @@ function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
   } else {
     fill(0);
   }
+  if (click && detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
+    ui_sounds[1].play();
+    caracter_actual = 0;
+    escena_actual++;
+  }
 
   rect(pos_x, pos_y, tam_x, tam_y, bordes);
-  estilo_texto(tam_y / 3, 255, CENTER, CENTER);
+  estilo_texto(tam_y / 3, 255, CENTER, CENTER, "courier");
   text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
 }
 
@@ -181,5 +220,5 @@ function estilo_texto(tam, color, align_x, align_y, fuente) {
   textSize(tam);
   fill(color);
   textAlign(align_x, align_y);
-  textFont("courier");
+  textFont(fuente);
 }
