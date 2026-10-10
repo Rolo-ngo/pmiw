@@ -1,10 +1,12 @@
+//Thiago Lionel Costa
+//Sebastian Lopez Alegre
 let caracter_actual = 0;
 let click = false;
 
 // Escenas
-let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, ESCENA3 = 3, ESCENA4 = 4, ESCENA5 = 5, ESCENA6 = 6, ESCENA7 = 7, ESCENA8 = 8, ESCENA9 = 9, ESCENA10 = 10, CREDITOS = 11;
+let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, ESCENA3 = 3, ESCENA4 = 4, ESCENA5 = 5, ESCENA6 = 6, ESCENA7 = 7, ESCENA8 = 8, ESCENA9 = 9, ESCENA10 = 10, ESCENA11 = 11, ESCENA12 = 12,ESCENA13 = 13, ESCENA14 = 14, ESCENA15 = 15, ESCENA16 = 16, ESCENA17 = 17, ESCENA18 = 18, ESCENA19 = 19, CREDITOS = 20;
 let escena_actual = MENU;
-let total_escenas = 11;
+let total_escenas = 20;
 
 // Imagenes
 let escenas = [];
@@ -27,7 +29,7 @@ function preload() {
 
   // Cargar textos
   texto_creditos = loadStrings("assets/texts/creditos.txt");
-  textos = preload_files("assets/texts/pantalla", 11, ".txt", loadStrings, 1);
+  textos = preload_files("assets/texts/pantalla", 20, ".txt", loadStrings, 1);
 }
 
 function setup() {
@@ -40,24 +42,42 @@ function draw() {
   } else if (escena_actual === CREDITOS) {
     draw_creditos();
   } else if (escena_actual === ESCENA1) {
-    dibujar_escenas(ESCENA2, "Continuar");
+    dibujar_escenas(ESCENA2);
   } else if (escena_actual === ESCENA2) {
     dibujar_escenas(ESCENA3);
   } else if (escena_actual === ESCENA3) {
-    dibujar_escenas(ESCENA4, "esconder", ESCENA6, "enfrentar", ESCENA8, "huir");
+    dibujar_escenas(ESCENA4, "Continuar" );
   } else if (escena_actual === ESCENA4) {
-    dibujar_escenas(ESCENA5);
+    dibujar_escenas(ESCENA5, "esconder", ESCENA7, "enfrentar", ESCENA9, "huir");
   } else if (escena_actual === ESCENA5) {
     dibujar_escenas(ESCENA6);
   } else if (escena_actual === ESCENA6) {
-    dibujar_escenas(ESCENA7);
+    dibujar_escenas(ESCENA11);
   } else if (escena_actual === ESCENA7) {
     dibujar_escenas(ESCENA8);
   } else if (escena_actual === ESCENA8) {
-    dibujar_escenas(ESCENA9);
+    dibujar_escenas(ESCENA12);
   } else if (escena_actual === ESCENA9) {
     dibujar_escenas(ESCENA10);
   } else if (escena_actual === ESCENA10) {
+    dibujar_escenas(ESCENA13);
+  }else if (escena_actual === ESCENA11) {
+    dibujar_escenas(ESCENA14, "encerrarlos", ESCENA14, "sacarlos");
+  }else if (escena_actual === ESCENA12) {
+    dibujar_escenas(ESCENA15, "liberarlos", ESCENA15, "adiestrarlos");
+  }else if (escena_actual === ESCENA13) {
+    dibujar_escenas(ESCENA16, "seguir matando", ESCENA16, "parar");
+  }else if (escena_actual === ESCENA14) {
+    dibujar_escenas(ESCENA17);
+  }else if (escena_actual === ESCENA15) {
+    dibujar_escenas(ESCENA18);
+  }else if (escena_actual === ESCENA16) {
+    dibujar_escenas(ESCENA19);
+  }else if (escena_actual === ESCENA17) {
+    dibujar_escenas(CREDITOS);
+  }else if (escena_actual === ESCENA18) {
+    dibujar_escenas(CREDITOS);
+  }else if (escena_actual === ESCENA19) {
     dibujar_escenas(CREDITOS);
   }
   click = false;
