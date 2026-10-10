@@ -12,7 +12,6 @@ let escenas = [];
 // Sonidos
 let background_music = [];
 let ui_sounds = [];
-let typewriter_sounds = [];
 
 // Textos
 let textos = [];
@@ -25,7 +24,6 @@ function preload() {
   // Cargar sonidos
   background_music = loadSound("assets/audio/music/background.mp3");
   ui_sounds = preload_files("assets/audio/sfx/boton", 2, ".mp3", loadSound, 0);
-  typewriter_sounds = preload_files("assets/audio/sfx/typewriter", 3, ".wav", loadSound, 1);
 
   // Cargar textos
   texto_creditos = loadStrings("assets/texts/creditos.txt");
@@ -42,25 +40,25 @@ function draw() {
   } else if (escena_actual === CREDITOS) {
     draw_creditos();
   } else if (escena_actual === ESCENA1) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA2, "Continuar");
   } else if (escena_actual === ESCENA2) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA3);
   } else if (escena_actual === ESCENA3) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA4, "esconder", ESCENA6, "enfrentar", ESCENA8, "huir");
   } else if (escena_actual === ESCENA4) {
-    dibujar_escena4();
+    dibujar_escenas(ESCENA5);
   } else if (escena_actual === ESCENA5) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA6);
   } else if (escena_actual === ESCENA6) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA7);
   } else if (escena_actual === ESCENA7) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA8);
   } else if (escena_actual === ESCENA8) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA9);
   } else if (escena_actual === ESCENA9) {
-    dibujar_escenas();
+    dibujar_escenas(ESCENA10);
   } else if (escena_actual === ESCENA10) {
-    dibujar_escenas();
+    dibujar_escenas(CREDITOS);
   }
   click = false;
 }
@@ -95,6 +93,50 @@ function draw_creditos() {
   }
 }
 
+function dibujar_escenas(escena_siguiente1, texto1, escena_siguiente2, texto2, escena_siguiente3, texto3) {
+  image(escenas[escena_actual], 0, 0, width, height);
+
+  fill(0, 200);
+  rect(0, 0 + (height / 3) * 2, width, height / 3);
+
+  estilo_texto(16, 255, LEFT, TOP, "courier");
+  let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
+  text(texto_actual, 20, (height / 3) * 2 + 10, width - 40, height / 3 - 20);
+  caracter_actual += 0.4;
+
+  if (escena_siguiente2 === undefined) {
+    dibujar_boton(width / 2 - 80, 380, 150, 40, "Continuar", 0, escena_siguiente1);
+  }
+  else if(escena_siguiente3 === undefined){
+    dibujar_boton(width / 5 - 80, 380, 140, 40, texto1, 0, escena_siguiente1);
+    dibujar_boton(width / 1.2 - 80, 380, 140, 40, texto2, 0, escena_siguiente2);
+  }
+  else {
+    dibujar_boton(width / 5 - 80, 380, 140, 40, texto1, 0, escena_siguiente1);
+    dibujar_boton(width / 2 - 80, 380, 140, 40, texto2, 0, escena_siguiente2);
+    dibujar_boton(width / 1.2 - 80, 380, 140, 40, texto3, 0, escena_siguiente3);
+  }
+
+}
+
+function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes, escena_siguiente) {
+  if (detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
+    fill(100);
+  }
+  else {
+    fill(0);
+  }
+  if (click && detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
+    ui_sounds[1].play();
+    caracter_actual = 0;
+    escena_actual = escena_siguiente;
+  }
+
+  rect(pos_x, pos_y, tam_x, tam_y, bordes);
+  estilo_texto(tam_y / 3, 255, CENTER, CENTER, "courier");
+  text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
+}
+
 function preload_files(arch_path, cant_files, formato, tipo, inicio) {
   let arch = [];
 
@@ -104,70 +146,7 @@ function preload_files(arch_path, cant_files, formato, tipo, inicio) {
   return arch;
 }
 
-function dibujar_escenas() {
-  image(escenas[escena_actual], 0, 0, width, height);
 
-  fill(0, 200);
-  rect(0, 0 + (height / 3) * 2, width, height / 3);
-
-  estilo_texto(16, 255, LEFT, TOP, "courier");
-  let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
-  text(texto_actual, 20, (height / 3) * 2 + 10, width - 40, height / 3 - 20);
-  caracter_actual += 0.4;
-
-  dibujar_boton(width / 2 - 80, 380, 150, 40, "Continuar", 0);
-}
-function dibujar_escena4() {
-  image(escenas[escena_actual], 0, 0, width, height);
-
-  fill(0, 200);
-  rect(0, 0 + (height / 3) * 2, width, height / 3);
-
-  estilo_texto(16, 255, LEFT, TOP, "courier");
-  let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
-  text(texto_actual, 20, (height / 3) * 2 + 10, width - 40, height / 3 - 20);
-  caracter_actual += 0.4;
-
-  dibujar_boton_opcion(width / 5 - 80, 380, 140, 40, "esconder", ESCENA5);
-  dibujar_boton_opcion(width / 2 - 80, 380, 140, 40, "liberar", ESCENA7);
-  dibujar_boton_opcion(width / 1.2 - 80, 380, 140, 40, "ahogar", ESCENA9);
-}
-
-function dibujar_boton_opcion(pos_x, pos_y, tam_x, tam_y, texto, escena_siguiente,) {
-  if (detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
-    fill(100);
-  }
-  else {
-    fill(0);
-  }
-
-  if (click && detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
-    ui_sounds[1].play();
-    caracter_actual = 0;
-    escena_actual = escena_siguiente;
-  }
-
-  rect(pos_x, pos_y, tam_x, tam_y, 0);
-  estilo_texto(tam_y / 3, 255, CENTER, CENTER, "courier");
-  text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
-}
-
-function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes) {
-  if (detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
-    fill(100);
-  } else {
-    fill(0);
-  }
-  if (click && detectar_zona(pos_x, pos_y, tam_x, tam_y)) {
-    ui_sounds[1].play();
-    caracter_actual = 0;
-    escena_actual++;
-  }
-
-  rect(pos_x, pos_y, tam_x, tam_y, bordes);
-  estilo_texto(tam_y / 3, 255, CENTER, CENTER, "courier");
-  text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
-}
 
 function detectar_zona(pos_x, pos_y, tam_x, tam_y) {
   if (mouseX > pos_x && mouseX < pos_x + tam_x && mouseY > pos_y && mouseY < pos_y + tam_y) {
