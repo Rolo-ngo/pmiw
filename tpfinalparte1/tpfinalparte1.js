@@ -1,4 +1,4 @@
-//Thiago Lionel Costa
+//Thiago Lionel Costa https://youtu.be/k1moJwR58Gs?si=wSZizurTeWK-4d0i
 //Sebastian Lopez Alegre
 let caracter_actual = 0;
 let click = false;
