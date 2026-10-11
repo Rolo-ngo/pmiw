@@ -1,5 +1,5 @@
 //Thiago Lionel Costa
-//Sebastian Lopez Alegre
+//Sebastian Lopez Alegre - https://youtu.be/o4C6uz7GxWA
 let caracter_actual = 0;
 let click = false;
 
@@ -118,16 +118,20 @@ function draw_creditos() {
 }
 
 function dibujar_escenas(escena_siguiente1, texto1, escena_siguiente2, texto2, escena_siguiente3, texto3) {
+  // Fondo
   image(escenas[escena_actual], 0, 0, width, height);
 
+  // Cuadro de texto
   fill(0, 200);
   rect(0, 0 + (height / 3) * 2, width, height / 3);
 
+  // Texto
   estilo_texto(16, 255, LEFT, TOP, "courier");
   let texto_actual = textos[escena_actual - 1].join("\n").substring(0, caracter_actual);
   text(texto_actual, 20, (height / 3) * 2 + 10, width - 40, height / 3 - 20);
   caracter_actual += 0.4;
 
+  // Botones
   if (escena_siguiente2 === undefined) {
     dibujar_boton(width / 2 - 80, 380, 150, 40, "Continuar", 0, escena_siguiente1);
   }
