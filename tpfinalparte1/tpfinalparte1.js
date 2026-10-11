@@ -39,10 +39,15 @@ function setup() {
 function draw() {
   if (escena_actual === MENU) {
     draw_menu_inicio();
+    background_music.stop();
   } else if (escena_actual === CREDITOS) {
     draw_creditos();
   } else if (escena_actual === ESCENA1) {
     dibujar_escenas(ESCENA2);
+    if (!background_music.isPlaying()) {
+      background_music.setVolume(0.2);
+      background_music.loop();
+    }
   } else if (escena_actual === ESCENA2) {
     dibujar_escenas(ESCENA3);
   } else if (escena_actual === ESCENA3) {
@@ -79,16 +84,12 @@ function draw() {
     dibujar_escenas(CREDITOS);
   } else if (escena_actual === ESCENA19) {
     dibujar_escenas(CREDITOS);
+
   }
   click = false;
 }
 
 function mousePressed() {
-  if (!background_music.isPlaying()) {
-    background_music.loop();
-    background_music.setVolume(0.2);
-  }
-
   click = true;
   print("escena_actual: " + escena_actual);
 }
