@@ -4,7 +4,7 @@ let caracter_actual = 0;
 let click = false;
 
 // Escenas
-let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, ESCENA3 = 3, ESCENA4 = 4, ESCENA5 = 5, ESCENA6 = 6, ESCENA7 = 7, ESCENA8 = 8, ESCENA9 = 9, ESCENA10 = 10, ESCENA11 = 11, ESCENA12 = 12,ESCENA13 = 13, ESCENA14 = 14, ESCENA15 = 15, ESCENA16 = 16, ESCENA17 = 17, ESCENA18 = 18, ESCENA19 = 19, CREDITOS = 20;
+let MENU = 0, ESCENA1 = 1, ESCENA2 = 2, ESCENA3 = 3, ESCENA4 = 4, ESCENA5 = 5, ESCENA6 = 6, ESCENA7 = 7, ESCENA8 = 8, ESCENA9 = 9, ESCENA10 = 10, ESCENA11 = 11, ESCENA12 = 12, ESCENA13 = 13, ESCENA14 = 14, ESCENA15 = 15, ESCENA16 = 16, ESCENA17 = 17, ESCENA18 = 18, ESCENA19 = 19, CREDITOS = 20;
 let escena_actual = MENU;
 let total_escenas = 20;
 
@@ -46,7 +46,7 @@ function draw() {
   } else if (escena_actual === ESCENA2) {
     dibujar_escenas(ESCENA3);
   } else if (escena_actual === ESCENA3) {
-    dibujar_escenas(ESCENA4, "Continuar" );
+    dibujar_escenas(ESCENA4, "Continuar");
   } else if (escena_actual === ESCENA4) {
     dibujar_escenas(ESCENA5, "esconder", ESCENA7, "enfrentar", ESCENA9, "huir");
   } else if (escena_actual === ESCENA5) {
@@ -61,23 +61,23 @@ function draw() {
     dibujar_escenas(ESCENA10);
   } else if (escena_actual === ESCENA10) {
     dibujar_escenas(ESCENA13);
-  }else if (escena_actual === ESCENA11) {
+  } else if (escena_actual === ESCENA11) {
     dibujar_escenas(ESCENA14, "encerrarlos", ESCENA14, "sacarlos");
-  }else if (escena_actual === ESCENA12) {
+  } else if (escena_actual === ESCENA12) {
     dibujar_escenas(ESCENA15, "liberarlos", ESCENA15, "adiestrarlos");
-  }else if (escena_actual === ESCENA13) {
+  } else if (escena_actual === ESCENA13) {
     dibujar_escenas(ESCENA16, "seguir matando", ESCENA16, "parar");
-  }else if (escena_actual === ESCENA14) {
+  } else if (escena_actual === ESCENA14) {
     dibujar_escenas(ESCENA17);
-  }else if (escena_actual === ESCENA15) {
+  } else if (escena_actual === ESCENA15) {
     dibujar_escenas(ESCENA18);
-  }else if (escena_actual === ESCENA16) {
+  } else if (escena_actual === ESCENA16) {
     dibujar_escenas(ESCENA19);
-  }else if (escena_actual === ESCENA17) {
+  } else if (escena_actual === ESCENA17) {
     dibujar_escenas(CREDITOS);
-  }else if (escena_actual === ESCENA18) {
+  } else if (escena_actual === ESCENA18) {
     dibujar_escenas(CREDITOS);
-  }else if (escena_actual === ESCENA19) {
+  } else if (escena_actual === ESCENA19) {
     dibujar_escenas(CREDITOS);
   }
   click = false;
@@ -127,7 +127,7 @@ function dibujar_escenas(escena_siguiente1, texto1, escena_siguiente2, texto2, e
   if (escena_siguiente2 === undefined) {
     dibujar_boton(width / 2 - 80, 380, 150, 40, "Continuar", 0, escena_siguiente1);
   }
-  else if(escena_siguiente3 === undefined){
+  else if (escena_siguiente3 === undefined) {
     dibujar_boton(width / 5 - 80, 380, 140, 40, texto1, 0, escena_siguiente1);
     dibujar_boton(width / 1.2 - 80, 380, 140, 40, texto2, 0, escena_siguiente2);
   }
@@ -157,17 +157,6 @@ function dibujar_boton(pos_x, pos_y, tam_x, tam_y, texto, bordes, escena_siguien
   text(texto, pos_x + tam_x / 2, pos_y + tam_y / 2);
 }
 
-function preload_files(arch_path, cant_files, formato, tipo, inicio) {
-  let arch = [];
-
-  for (let i = inicio; i < cant_files; i++) {
-    arch.push(tipo(arch_path + i + formato));
-  }
-  return arch;
-}
-
-
-
 function detectar_zona(pos_x, pos_y, tam_x, tam_y) {
   if (mouseX > pos_x && mouseX < pos_x + tam_x && mouseY > pos_y && mouseY < pos_y + tam_y) {
     return true;
@@ -175,6 +164,15 @@ function detectar_zona(pos_x, pos_y, tam_x, tam_y) {
   else {
     return false;
   }
+}
+
+function preload_files(arch_path, cant_files, formato, tipo, inicio) {
+  let arch = [];
+
+  for (let i = inicio; i < cant_files; i++) {
+    arch.push(tipo(arch_path + i + formato));
+  }
+  return arch;
 }
 
 function estilo_texto(tam, color, align_x, align_y, fuente) {
