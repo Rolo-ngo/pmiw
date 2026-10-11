@@ -85,7 +85,8 @@ function draw() {
 
 function mousePressed() {
   if (!background_music.isPlaying()) {
-    //background_music.loop();
+    background_music.loop();
+    background_music.setVolume(0.2);
   }
 
   click = true;
@@ -102,10 +103,12 @@ function draw_menu_inicio() {
 }
 
 function draw_creditos() {
-  background(64);
+  background(0);
 
   estilo_texto(20, 255, CENTER, CENTER, "courier");
-  text(texto_creditos.join("\n"), width / 2, height / 2);
+  let texto_actual = texto_creditos.join("\n").substring(0, caracter_actual);
+  text(texto_actual, width / 2, height / 2);
+  caracter_actual += 0.4;
 
   dibujar_boton(width / 2 - 80, 360, 160, 50, "Volver al menu", 0, 100, 150);
   if (click && detectar_zona(width / 2 - 80, 360, 160, 50)) {
