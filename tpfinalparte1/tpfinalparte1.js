@@ -1,5 +1,5 @@
-//Thiago Lionel Costa
-//Sebastian Lopez Alegre
+//Thiago Lionel Costa - https://youtu.be/k1moJwR58Gs?si=wSZizurTeWK-4d0i
+//Sebastian Lopez Alegre - https://youtu.be/o4C6uz7GxWA
 let caracter_actual = 0;
 let click = false;
 
