@@ -1,18 +1,45 @@
 class Principal {
     constructor(cant_conejos) {
+        this.fondo = new Fondo(fondo, fondoCapas);
         this.cant = cant_conejos;
         this.conejos = [];
         this.contador = new Contador(cant_conejos);
 
         for (let i = 0; i < this.cant; i++) {
-            this.conejos[i] = new Conejo(random(width), random(height), random(32, 64), conejo_img[conejo_img.length - 1], conejo_sonido);
+            let x, y;
+            let zona=floor(random(5));
+            if(zona === 0){//dventana
+                x = random(0,230);
+                y = random(30,130);                
+            }
+            else if(zona === 1){//detras del sillon
+            x = random(0,150);
+            y = random(300, 380);
+            }
+            else if (zona === 2){//mueble
+                x = random(480, 720);
+                y = random(180, 270);
+            }
+            else if(zona === 3){//tele
+                x = random(400, 600);
+                y = random(185, 252);
+            }
+            else{
+                x = random(700, 760);
+                y = random(190, 315);
+            }
+            this.conejos[i] = new Conejo(x, y, random(32, 48), conejo_img[conejo_img.length - 1], conejo_sonido);
         }
     }
 
     mostrar() {
+        this.fondo.mostrarFondo();
+
         for (let i = 0; i < this.cant; i++) {
             this.conejos[i].mostrar();
         }
+
+        this.fondo.mostrarCapas();
 
         this.contador.mostrar_fondo();
         this.contador.cantidad_conejos();
@@ -28,7 +55,21 @@ class Principal {
         }
     }
 }
+class Fondo {
+constructor (fondo, fondoCapas) {
+this.fondo = fondo;
+this.fondoCapas = fondoCapas;
+}
 
+mostrarFondo(){
+image(this.fondo, 0, 0, width, height);
+}
+mostrarCapas(){
+    for (let i = 0; i < this.fondoCapas.length; i++) {
+        image(this.fondoCapas[i], 0, 0, width, height);
+    }
+}
+}
 class Conejo {
     constructor(x, y, tam, img, audio) {
         this.pos_x = x;
