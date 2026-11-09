@@ -5,13 +5,14 @@ let conejo_img = [];
 let conejo_sonido;
 
 let juego;
+let pantallas;
 
 function preload() {
   fondo = loadImage("assets/images/bg/background.png");
   for (let i = 1; i < 6; i++) {
     fondoCapas.push (loadImage("assets/images/bg/background"+i+".png"));
   }
-  conejo_img = preload_files("assets/images/enemies/bunny", 1, ".png", loadImage, 0);
+  conejo_img = preload_files("assets/images/enemies/bunny", 3, ".png", loadImage, 0);
   conejo_sonido = loadSound("assets/audio/sfx/bunny0.mp3")
   //preload_files("assets/audio/sfx/bunny", 1, ".mp3", loadSound, 0);
 }
@@ -19,15 +20,16 @@ function preload() {
 function setup() {
   createCanvas(800, 400);
 
-  juego = new Principal(16);
+  juego = new Principal(11);
+  pantallas = new Pantallas();
 }
 
 function draw() {
-  juego.mostrar();
+  pantallas.actualizar(juego);
 }
 
 function mousePressed() {
-  juego.sonido();
+  pantallas.clics(juego);
 }
 
 function preload_files(arch_path, cant_files, formato, tipo, inicio) {
