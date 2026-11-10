@@ -7,25 +7,25 @@ class Principal {
 
         for (let i = 0; i < this.cant; i++) {
             let x, y;
-            let zona=floor(random(5));
-            
-            if(zona === 0){//ventana
-                x = random(0,160);
-                y = random(100,130);                
+            let zona = floor(random(5));
+
+            if (zona === 0) {//ventana
+                x = random(0, 160);
+                y = random(100, 130);
             }
-            else if(zona === 1){//detras del sillon
-            x = random(0,150);
-            y = random(300, 380);
+            else if (zona === 1) {//detras del sillon
+                x = random(0, 150);
+                y = random(300, 380);
             }
-            else if (zona === 2){//mueble
+            else if (zona === 2) {//mueble
                 x = random(480, 720);
                 y = random(180, 270);
             }
-            else if(zona === 3){//tele
+            else if (zona === 3) {//tele
                 x = random(400, 600);
                 y = random(185, 252);
             }
-            else{
+            else {
                 x = random(700, 760);
                 y = random(190, 315);
             }
@@ -57,19 +57,19 @@ class Principal {
     }
 }
 class Fondo {
-constructor (fondo, fondoCapas) {
-this.fondo = fondo;
-this.fondoCapas = fondoCapas;
-}
-
-mostrarFondo(){
-image(this.fondo, 0, 0, width, height);
-}
-mostrarCapas(){
-    for (let i = 0; i < this.fondoCapas.length; i++) {
-        image(this.fondoCapas[i], 0, 0, width, height);
+    constructor(fondo, fondoCapas) {
+        this.fondo = fondo;
+        this.fondoCapas = fondoCapas;
     }
-}
+
+    mostrarFondo() {
+        image(this.fondo, 0, 0, width, height);
+    }
+    mostrarCapas() {
+        for (let i = 0; i < this.fondoCapas.length; i++) {
+            image(this.fondoCapas[i], 0, 0, width, height);
+        }
+    }
 }
 class Conejo {
     constructor(x, y, tam, img, audio) {
@@ -111,7 +111,7 @@ class Conejo {
 
 class Contador {
     constructor(cant_conejos) {
-    this.cant_conejos = cant_conejos;
+        this.cant_conejos = cant_conejos;
     }
 
     mostrar_fondo() {
@@ -130,58 +130,69 @@ class Contador {
 }
 
 class Pantallas {
-constructor () {
-this.estado="inicio";
-}
-actualizar(juego){
-if(this.estado === "inicio"){
-this.mostrarInicio();
-}else if(this.estado === "juego"){
-    juego.mostrar();
-
-    if (juego.contador.cant_conejos <= 0){
-        this.estado = "victoria";
-    }
-}
-else if (this.estado === "victoria"){
-    this.mostrarVictoria();
-}
-}
-clics(juego){
-    if (this.estado === "inicio"){
-        this.estado = "juego";  
-    }else if (this.estado === "juego"){
-        juego.sonido();
-    }else if (this.estado === "victoria"){ 
-        setup();
+    constructor() {
         this.estado = "inicio";
     }
-   }
-   mostrarInicio(){
-background (228, 34, 73);
-fill(255);
-textAlign(CENTER,CENTER);
+    actualizar(juego) {
+        if (this.estado === "inicio") {
+            this.mostrarInicio();
+        } else if (this.estado === "juego") {
+            juego.mostrar();
 
-textSize(32);
-text("Reglas:", width/2, 160);
+            if (juego.contador.cant_conejos <= 0) {
+                this.estado = "victoria";
+            }
+        }
+        else if (this.estado === "victoria") {
+            this.mostrarVictoria();
+        }
+    }
+    clics(juego) {
+        if (this.estado === "inicio") {
+            this.estado = "juego";
+        } else if (this.estado === "juego") {
+            juego.sonido();
+        } else if (this.estado === "victoria") {
+            setup();
+            this.estado = "inicio";
+        }
+    }
+    mostrarInicio() {
+        image(fondo, 0, 0, width, height);
+        //background(228, 34, 73);
+        background(0, 225);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textFont("courier");
 
-textSize(16);
-text("Encuentra a todos los conejos para ganar", width/2, 220);
+        textSize(32);
+        text("Reglas", width / 2, 160);
 
-textSize(18);
-text("Clickea en cualquier parte para empezar", width/2, 320);
-   }
+        rectMode(CENTER, TOP);
+        rect(width / 2, 178, 200, 2, 16);
 
-mostrarVictoria(){
-background(228, 34, 73);
-fill(255);
-textAlign(CENTER,CENTER);
+        textSize(16);
+        text("Encuentra a todos los conejos para ganar", width / 2, 220);
 
-textSize(36);
-text("Ganaste, encontraste a todos los conejos", width/2, 210);
+        textSize(12);
+        text("Clickea en cualquier parte para empezar", width / 2, 320);
+    }
 
-textSize(16);
-fill(255)
-text("Clickea en cualquier parte para reiniciar", width/2), 300;
-}
+    mostrarVictoria() {
+        //background(228, 34, 73);
+        background(12);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textFont("courier");
+
+        textSize(32);
+        text("Ganaste", width / 2, 160);
+
+        textSize(16);
+        text("Encontraste a todos los conejos", width / 2, 220);
+
+        textSize(12);
+        fill(255);
+        text("Clickea en cualquier parte para reiniciar", width / 2, 320);
+    }
 }
