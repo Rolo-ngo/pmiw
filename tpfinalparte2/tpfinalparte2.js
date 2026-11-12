@@ -20,7 +20,7 @@ function preload() {
 function setup() {
   createCanvas(800, 400);
 
-  juego = new Principal(11);
+  juego = new Principal(11, 3);
   pantallas = new Pantallas();
 }
 

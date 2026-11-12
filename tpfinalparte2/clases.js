@@ -1,9 +1,10 @@
 class Principal {
-    constructor(cant_conejos) {
+    constructor(cant_conejos, tiempo) {
         this.fondo = new Fondo(fondo, fondoCapas);
         this.cant = cant_conejos;
         this.conejos = [];
         this.contador = new Contador(cant_conejos);
+        this.timer = new Timer(tiempo);
 
         for (let i = 0; i < this.cant; i++) {
             let x, y;
@@ -40,10 +41,9 @@ class Principal {
             this.conejos[i].mostrar();
         }
 
-
-
         this.contador.mostrar_fondo();
         this.contador.cantidad_conejos();
+        this.timer.actualizar();
     }
 
     sonido() {
@@ -71,6 +71,7 @@ class Fondo {
         }
     }
 }
+
 class Conejo {
     constructor(x, y, tam, img, audio) {
         this.pos_x = x;
@@ -109,6 +110,22 @@ class Conejo {
     }
 }
 
+class Timer {
+    constructor(tiempo) {
+        this.seconds = tiempo;
+        this.ultimoTiempo = millis();
+        this.texto = "Tiempo: 0.00s";
+    }
+
+    actualizar() {
+        if (this.seconds <= 60 && frameCount % 60 == 0) {
+            this.seconds--;
+        }
+
+        text("Tiempo: " + this.seconds + "s", width - 80, 20);
+    }
+}
+
 class Contador {
     constructor(cant_conejos) {
         this.cant_conejos = cant_conejos;
@@ -136,7 +153,8 @@ class Pantallas {
     actualizar(juego) {
         if (this.estado === "inicio") {
             this.mostrarInicio();
-        } else if (this.estado === "juego") {
+        }
+        else if (this.estado === "juego") {
             juego.mostrar();
 
             if (juego.contador.cant_conejos <= 0) {
@@ -146,13 +164,22 @@ class Pantallas {
         else if (this.estado === "victoria") {
             this.mostrarVictoria();
         }
+        else if (this.estado === "derrota") {
+            this.mostrarDerrota();
+        }
     }
     clics(juego) {
         if (this.estado === "inicio") {
             this.estado = "juego";
-        } else if (this.estado === "juego") {
+        }
+        else if (this.estado === "juego") {
             juego.sonido();
-        } else if (this.estado === "victoria") {
+        }
+        else if (this.estado === "victoria") {
+            setup();
+            this.estado = "inicio";
+        }
+        else if (this.estado === "derrota") {
             setup();
             this.estado = "inicio";
         }
@@ -190,6 +217,25 @@ class Pantallas {
 
         textSize(16);
         text("Encontraste a todos los conejos", width / 2, 220);
+
+        textSize(12);
+        fill(255);
+
+        text("Clickea en cualquier parte para reiniciar", width / 2, 320);
+    }
+
+    mostrarDerrota() {
+        //background(228, 34, 73);
+        background(12);
+        fill(255);
+        textAlign(CENTER, CENTER);
+        textFont("courier");
+
+        textSize(32);
+        text("Perdiste", width / 2, 160);
+
+        textSize(16);
+        text("No encontraste a todos los conejos", width / 2, 220);
 
         textSize(12);
         fill(255);
