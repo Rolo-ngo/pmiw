@@ -1,6 +1,7 @@
 class Principal {
     constructor(cant_conejos, tiempo) {
         this.fondo = new Fondo(fondo, fondoCapas);
+        this.pantallas = new Pantallas();
         this.cant = cant_conejos;
         this.conejos = [];
         this.contador = new Contador(cant_conejos);
@@ -32,6 +33,18 @@ class Principal {
             }
             this.conejos[i] = new Conejo(x, y, random(45, 50), conejo_img[conejo_img.length - 1], conejo_sonido);
         }
+    }
+
+    actualizar() {
+        this.pantallas.actualizar(this);
+
+        if (this.timer.seconds <= 0 && this.pantallas.estado === "juego") {
+            this.pantallas.estado = "derrota";
+        }
+    }
+
+    clicks() {
+        this.pantallas.clics(this);
     }
 
     mostrar() {
