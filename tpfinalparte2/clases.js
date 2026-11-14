@@ -52,7 +52,8 @@ class Principal {
         for (let i = 0; i < this.cant; i++) {
             this.conejos[i].mostrar();
         }
-this.fondo.mostrarCapas();
+
+        this.fondo.mostrarCapas();
         this.contador.mostrar_fondo();
         this.contador.cantidad_conejos();
         this.timer.actualizar();
@@ -77,10 +78,32 @@ class Fondo {
     mostrarFondo() {
         image(this.fondo, 0, 0, width, height);
     }
+
     mostrarCapas() {
+
         for (let i = 0; i < this.fondoCapas.length; i++) {
+            let opacidad;
+            if (this.cursorEnCapa(i)) {
+                opacidad = 150;
+            }
+            else {
+                opacidad = 255;
+            }
+
+            tint(255, 255, 255, opacidad);
             image(this.fondoCapas[i], 0, 0, width, height);
         }
+        noTint();
+    }
+    cursorEnCapa(capa) {
+        let zonas = [[0, 0, 210, 160], [0, 178, 300, 350], [350, 142, 536, 343], [590, 50, width, 315], [200, 300, 359, 600]];
+        let zona = zonas[capa];
+        let x1 = zona[0];
+        let y1 = zona[1];
+        let x2 = zona[2];
+        let y2 = zona[3];
+
+        return (mouseX > x1 && mouseX < x2 && mouseY > y1 && mouseY < y2);
     }
 }
 

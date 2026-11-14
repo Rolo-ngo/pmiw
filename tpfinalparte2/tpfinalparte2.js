@@ -24,6 +24,7 @@ function draw() {
 
 function mousePressed() {
   juego.clicks();
+  print("X: " + mouseX + " Y: " + mouseY);
 }
 
 function preload_files(arch_path, cant_files, formato, tipo, inicio) {
