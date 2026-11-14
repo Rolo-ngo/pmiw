@@ -13,25 +13,25 @@ class Principal {
 
             if (zona === 0) {//ventana
                 x = random(0, 160);
-                y = random(100, 130);
+                y = random(200, 160);
             }
             else if (zona === 1) {//detras del sillon
-                x = random(0, 150);
-                y = random(300, 380);
+                x = random(0, 50);
+                y = random(335, 400);
             }
             else if (zona === 2) {//mueble
-                x = random(480, 720);
-                y = random(180, 270);
+                x = random(350, 560);
+                y = random(360, 400);
             }
             else if (zona === 3) {//tele
-                x = random(400, 600);
-                y = random(185, 252);
+                x = random(530, 590);
+                y = random(215, 242);
             }
-            else {
-                x = random(700, 760);
+            else { //cortinas
+                x = random(700, 730);
                 y = random(190, 315);
             }
-            this.conejos[i] = new Conejo(x, y, random(45, 50), conejo_img[conejo_img.length - 1], conejo_sonido);
+            this.conejos[i] = new Conejo(x, y, random(50, 60), random(conejo_img), conejo_sonido);
         }
     }
 
@@ -49,11 +49,10 @@ class Principal {
 
     mostrar() {
         this.fondo.mostrarFondo();
-        this.fondo.mostrarCapas();
         for (let i = 0; i < this.cant; i++) {
             this.conejos[i].mostrar();
         }
-
+this.fondo.mostrarCapas();
         this.contador.mostrar_fondo();
         this.contador.cantidad_conejos();
         this.timer.actualizar();

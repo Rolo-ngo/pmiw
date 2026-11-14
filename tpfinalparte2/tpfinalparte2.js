@@ -7,7 +7,7 @@ let juego;
 
 function preload() {
   fondo = loadImage("assets/images/bg/background.png");
-  fondoCapas = preload_files("assets/images/bg/background", 5, ".png", loadImage, 1);
+  fondoCapas = preload_files("assets/images/bg/background", 6, ".png", loadImage, 1);
   conejo_img = preload_files("assets/images/enemies/bunny", 3, ".png", loadImage, 0);
   conejo_sonido = loadSound("assets/audio/sfx/bunny0.mp3")
 }
@@ -15,7 +15,7 @@ function preload() {
 function setup() {
   createCanvas(800, 400);
 
-  juego = new Principal(11, 3);
+  juego = new Principal(11, 60);
 }
 
 function draw() {
