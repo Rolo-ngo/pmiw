@@ -211,7 +211,7 @@ class Pantallas {
         rect(width / 2, 178, 200, 2, 16);
 
         textSize(16);
-        text("Encuentra a todos los conejos para ganar", width / 2, 220);
+        text("¡Encuentra a todos los conejos antes de que se acabe el tiempo!", width / 2, 220);
 
         textSize(12);
         text("Clickea en cualquier parte para empezar", width / 2, 320);
