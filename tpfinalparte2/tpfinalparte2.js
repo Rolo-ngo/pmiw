@@ -1,3 +1,5 @@
+// Sebastián López Alegre - https://youtu.be/aqrmOblyrU4
+
 let fondo;
 let fondoCapas = [];
 let conejo_img = [];
