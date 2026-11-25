@@ -40,3 +40,12 @@ body.dark {
 html {
     scroll-behavior: smooth;
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a volver-arriba{
+    margin: 24px;
+}
