@@ -4,24 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>pmiw - tpfinalparte3</title>
 
-    <!-- BearCSS -->
+    <!-- BeerCSS -->
     <link href="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.min.css" rel="stylesheet">
     <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.min.js"></script>
     <script type="module"
         src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.4/dist/cdn/material-dynamic-colors.min.js"></script>
+
+    <!-- StyleCSS -->
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Sketch Dialog -->
     <script src="https://cdn.jsdelivr.net/gh/entorno3/sketch-dialog@2.0.0/sketch-dialog.js"></script>
 </head>
 
 <body class="dark">
-    <header class="responsive">
-        <h5 id="top">pmiw - tpfinalparte3</h5>
-
-        <nav class="left_drawer">
+    <header id="top" class="responsive">
+        <div class="row left-align">
+            <h1 class="small">Carta a una señorita en Paris</h1>
+            <i class="large"> <img class="responsive" src="img/bunny0.png" alt="Ilustración de un conejo"></i>
+        </div>
+        <nav class="left-align">
             <a href="#top">
                 <i>home</i>
                 <div>Inicio</div>
@@ -30,51 +34,87 @@
                 <i>code</i>
                 <div>Proyecto</div>
             </a>
+            <a href="#como-jugar">
+                <i>help</i>
+                <div>Cómo jugar</div>
+            </a>
             <a href="#informacion">
                 <i>info</i>
                 <div>Información</div>
             </a>
+
         </nav>
     </header>
 
     <main class="responsive">
         <section class="center-align padding">
             <div class="padding">
-                <h6>Proyecto final - PMIW</h6>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero voluptates, suscipit, praesentium
-                    ducimus odit labore ipsum blanditiis dolorum eius illum eum ullam. Nemo similique tempora repellat
-                    deleniti molestiae unde. Fugiat..</p>
-
+                <h2 class="small">Del cuento al juego</h2>
+                <p>Este proyecto consiste en presentar una experiencia interactiva inspirada en el cuento <em>"Carta a
+                        una señorita en Paris"</em>, del escritor Julio Cortazar. <br>A través de un juego digital
+                    creado en p5.js,
+                    buscamos representar algunos elementos más característicos de la historia y transformarlos en una
+                    experiencia única para el usuario.</p>
             </div>
         </section>
 
-        <section id=proyecto class="padding">
+        <section id="proyecto" class="padding">
             <article class="round">
                 <div class="padding">
-                    <h4>Proyecto</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero voluptates, suscipit, praesentium
-                        ducimus odit labore ipsum blanditiis dolorum eius illum eum ullam. Nemo similique tempora
-                        repellat deleniti molestiae unde. Fugiat..</p>
-                    <button class="large" data-sketch="game/index.html"><i>play_arrow</i>Abrir Sketch</button>
+                    <h2 class="small">La búsqueda de los conejos</h2>
+
+                    <p>El juego propone una dinámica de búsqueda de objetos, en la que el jugador deberá encontrar a
+                        todos los conejos escondidos dentro de un escenario antes de que se agote el tiempo.</p>
+                    <img src="img/background.png" alt="Escenario del juego" class="responsive padding">
+                    <div class="center-align padding">
+                        <button class="responsive large" data-sketch="game/index.html"><i>play_arrow</i>Jugar</button>
+                    </div>
                 </div>
             </article>
         </section>
-        <section id=informacion class="padding">
+
+        <section id="como-jugar" class="padding">
             <article class="round">
                 <div class="padding">
-                    <h4>Información</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero voluptates, suscipit, praesentium
-                        ducimus odit labore ipsum blanditiis dolorum eius illum eum ullam. Nemo similique tempora
-                        repellat deleniti molestiae unde. Fugiat..</p>
+                    <h2 class="small">Cómo jugar</h2>
+                    <ul>
+                        <li>El objetivo del juego es encontrar a todos los conejos escondidos en el escenario antes de
+                            que se acabe el tiempo.</li>
+                        <li>El jugador deberá click sobre el conejo para encontrarlo.</li>
+                        <li>Si se agota el tiempo antes de encontrar a todos los conejos, perderás.
+                        </li>
+                    </ul>
+                </div>
+            </article>
+        </section>
+
+        <section id="informacion" class="padding">
+            <article class="round">
+                <div class="padding">
+                    <h2 class="small">Información</h2>
+                    <h3 class="small">Integrantes del proyecto</h3>
+                    <ul>
+                        <li>Sebastián López Alegre</li>
+                        <li>Thiago Costa</li>
+                    </ul>
+                    <h3 class="small">Contexto del cuento</h3>
+                    <p>El cuento <em>"Carta a una señorita en Paris"</em> fue escrito por Julio Cortázar y publicado en
+                        1951. La historia narra la experiencia de un hombre que tiene una condición extraña: Cada tanto
+                        vomita conejos.</p>
+
                 </div>
             </article>
         </section>
     </main>
 
     <footer class="responsive center-align padding">
-        <h6>Sebastián López Alegre · Programación para medios interactivos orientada a las
-            tecnologías web · 2026</h6>
+        <p>Sebastián López Alegre y Thiago Costa· Programación para medios interactivos orientada a las
+            tecnologías web · 2026</p>
     </footer>
+
+    <a href="#top" class="button circle large fixed right bottom margin" aria-label="Volver arriba">
+        <i>arrow_upward</i>
+    </a>
 </body>
 
 </html>
